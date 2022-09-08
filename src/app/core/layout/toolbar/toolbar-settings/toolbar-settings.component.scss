@@ -1,0 +1,60 @@
+@import "../../../../../styles/var";
+
+.toolbar-notifications {
+  position: relative;
+
+  .header {
+    padding-left: $spacing / 1.5;
+    border-bottom: 1px solid $theme-divider;
+  }
+
+  .button {
+    height: 100%;
+    padding: 0;
+    min-width: $toolbar-button-width;
+
+    .icon {
+      color: $toolbar-button-icon-color;
+    }
+  }
+
+  .dropdown {
+    background: white;
+    position: absolute;
+    top: $toolbar-height;
+    right: 0;
+    width: 100%;
+    min-width: 160px;
+    z-index: -1;
+    transform: translateY(-110%);
+    visibility: hidden;
+    transition: transform .4s cubic-bezier(.25,.8,.25,1), visibility .4s cubic-bezier(.25,.8,.25,1);
+
+    .list {
+      padding-top: $spacing/3;
+
+      .item {
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: center;
+        height: 48px;
+        padding: 0 $spacing/1.5;
+        position: relative;
+        cursor: pointer;
+        outline: none;
+
+        .icon {
+          padding-right: 41px;
+          color: $theme-icon;
+        }
+      }
+    }
+
+    &.open {
+      transform: translateY(0);
+      visibility: visible;
+    }
+  }
+}

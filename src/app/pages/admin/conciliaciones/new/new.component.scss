@@ -1,0 +1,105 @@
+@import 'var';
+:host {
+    .mat-dialog-title {
+        margin-bottom: 0 !important;
+    }
+    .mat-dialog-actions {
+        justify-content: flex-end;
+    }
+    mat-dialog-content {
+        
+        max-height: 100%;
+        h3 {
+            font-size: 1.1em;
+            margin: 10px 0 6px;
+        }
+    }
+    .insurances-list {
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 50px;
+        justify-content: center;
+        @media (max-width: 959px) {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .insurance-item {
+            position: relative;
+            cursor: pointer;
+            button{
+                position: absolute;
+                top: 106px;
+                right: -10px;
+                border: solid 2px #fff;
+                mat-icon {
+                    margin-top: -4px;
+                }
+            }
+            mat-card {
+                border: solid 1px #eeeeee;
+            }
+            &.inactive {
+                filter: grayscale(1);
+                opacity: .4;
+                cursor: default;
+            }
+            &.active {
+                mat-card {
+                    border: solid 1px $theme-color-primary;
+                }
+            }
+        }
+        mat-card {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            img {
+                max-width: 100%;
+                max-height: 100%;
+            }
+        }
+        strong {
+            text-align: center;
+            display: block;
+            margin: 5px 0;
+        }
+    }
+    .upload-container {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        border-radius: 8px;
+        border: dashed 2px #cbcbcb;
+        mat-icon.upload-icon {
+            width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: #898989;
+        }
+        mat-icon.remove-file {
+            
+            margin-bottom: 20px;
+        }
+        .selected-file {
+            border: solid 1px #c9c4c4;
+            border-radius: 4px;
+            padding: 4px 14px;
+            margin-bottom: 20px;        
+        }
+        mat-button {
+            margin-bottom: 10px;
+        }
+        .agent-selector > mat-label{
+             margin-bottom: 1.25em;
+        }
+    }   
+
+}

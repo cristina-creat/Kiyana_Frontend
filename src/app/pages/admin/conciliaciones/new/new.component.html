@@ -1,0 +1,145 @@
+<h2 mat-dialog-title>Nueva conciliación</h2>
+
+<mat-dialog-content>
+    <mat-horizontal-stepper [linear]="true" #stepper>
+        <mat-step [stepControl]="firstFormGroup" label="Aseguradora">
+            <div class="insurances-list" fxLayoutGap="20px">
+                <div class="insurance-item" [class.active] = "currentInsurance === 'Qualitas'" (click)="setInsurance('Qualitas')">
+                    <mat-card>
+                        <img src="assets/img/conciliaciones/qualitas.png"/>
+                    </mat-card>
+                    <button mat-mini-fab color="primary" *ngIf="currentInsurance === 'Qualitas'">
+                        <mat-icon>done</mat-icon>
+                    </button>
+                    <strong>Quálitas</strong>
+                </div>
+                <div class="insurance-item" [class.active] = "currentInsurance === 'HDI'" (click)="setInsurance('HDI')">
+                    <mat-card>
+                        <img src="assets/img/conciliaciones/hdi.jpg"/>
+                    </mat-card>
+                    <button mat-mini-fab color="primary" *ngIf="currentInsurance === 'HDI'">
+                        <mat-icon>done</mat-icon>
+                    </button>
+                    <strong>HDI Seguros</strong>
+                </div>
+                <div class="insurance-item" [class.active] = "currentInsurance === 'CHUBB'" (click)="setInsurance('CHUBB')">
+                    <mat-card>
+                        <img src="assets/img/conciliaciones/chubb.jpg"/>
+                    </mat-card>
+                    <button mat-mini-fab color="primary" *ngIf="currentInsurance === 'CHUBB'">
+                        <mat-icon>done</mat-icon>
+                    </button>
+                    <strong>CHUBB</strong>
+                </div>
+            </div>
+            <mat-dialog-actions>
+                
+                <span fxFlex></span>
+                <button mat-flat-button color="primary" matStepperNext>
+                    Continuar
+                </button>
+              </mat-dialog-actions>
+            
+        </mat-step>
+        <mat-step [stepControl]="secondFormGroup" label="Periodo">
+            
+            <form [formGroup]="secondFormGroup">
+                <h3>Selecciona el periodo</h3>
+                <mat-form-field appearance="outline">
+                    <mat-label>Periodo:</mat-label>
+                    <input matInput [matDatepicker]="dp" [formControl]="secondFormGroup.controls.period" autocomplete="off">
+                    <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                    <mat-datepicker #dp
+                                    startView="multi-year"
+                                    (yearSelected)="chosenYearHandler($event)"
+                                    (monthSelected)="chosenMonthHandler($event, dp)"
+                                    panelClass="example-month-picker">
+                    </mat-datepicker>
+                    <mat-error *ngIf="secondFormGroup.invalid">Periodo seleccionado incorrecto</mat-error>
+                </mat-form-field>
+                <!--
+                <h3>Selecciona una clave de agente</h3>
+                <mat-form-field appearance="outline">
+                    <mat-label>Selecciona una clave</mat-label>
+                    <mat-select formControlName="agent">
+                      <mat-option value="all">
+                        {{ code }}
+                      </mat-option>
+                      <mat-option *ngFor="let code of agentCodes" [value]="code">
+                        {{ code }}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                -->                
+
+            </form>
+            <mat-dialog-actions style="margin-top: 50px;">
+                <button mat-button matStepperPrevious>Anterior</button>
+                <span fxFlex></span>
+                <button mat-flat-button color="primary" matStepperNext [disabled]="secondFormGroup.invalid">
+                    Continuar
+                </button>
+            </mat-dialog-actions>
+        </mat-step>
+        <mat-step [stepControl]="thirdFormGroup" label="Reporte del agente">
+            <form [formGroup]="thirdFormGroup">
+                <h3>Sube tu reporte del agente:</h3>
+                <div class="upload-container" >
+                    <input
+                        type="file"
+                        #importSicaButton
+                        (change)="importSica($event)"
+                        accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                        style="display: none;"
+                    />
+                    <div *ngIf="!fileInfo" fxLayout="column" fxLayoutAlign="start center">
+                        <mat-icon class="upload-icon">file_upload</mat-icon>
+                        <button mat-raised-button color="accent" (click)="importSicaButton.click()">Seleccionar archivo</button>
+                    </div>
+
+                    <div fxLayout="row" fxLayoutAlign="space-around center" *ngIf="fileInfo">
+                        <span class="selected-file" fxFlex>{{ fileInfo }} </span>
+                        <button mat-icon-button (click)="fileInfo = null">
+                            <mat-icon class="remove-file" aria-label="Remove file">delete</mat-icon>
+                        </button>
+                    </div>
+                    <div class="alert alert-warn" *ngIf="fileInfo && !agentCodes.length">
+                        El archivo seleccionado no contiene agentes.
+                    </div>
+                    <div class="agent-selector" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" [ngClass]="{'hidden':!fileInfo || !agentCodes.length}">
+                        <mat-label>Selecciona los agentes:</mat-label>
+                        <mat-form-field appearance="outline" fxFlex>
+                            <mat-label>Selecciona:</mat-label>
+                            <mat-select placeholder="Selecciona los agentes" [formControl]="thirdFormGroup.controls.agentes" multiple>
+                                <mat-option *ngFor="let agent of agentCodes" [value]="agent">{{ agent }}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+                    
+                </div>
+                
+
+            </form>
+            <mat-dialog-actions style="margin-top: 20px;">
+                <button mat-button matStepperPrevious>Anterior</button>
+                <span fxFlex></span>
+                <button mat-flat-button color="primary" matStepperNext>
+                    Continuar
+                </button>
+            </mat-dialog-actions>
+        </mat-step>
+        <mat-step label="Enviar">
+            <h3>ENVIAR</h3>
+            <p>Tu solicitud será enviada, una vez finalizado el proceso de conciliación se eviará por correo electrónico y estará disponible en tu panel de administración.</p>
+            <mat-dialog-actions style="margin-top: 100px;">
+                <button mat-button matStepperPrevious>Anterior</button>
+                <span fxFlex></span>
+                <button mat-flat-button color="primary" (click)="makeRequest()">
+                    ENVIAR
+                </button>
+            </mat-dialog-actions>
+        </mat-step>
+    </mat-horizontal-stepper>
+</mat-dialog-content>
+
+

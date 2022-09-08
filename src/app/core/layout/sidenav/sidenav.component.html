@@ -1,0 +1,14 @@
+<div class="sidenav collapsed" fxFlex="grow" fxLayout="column" [@sidenavState]="sidenavState$ | async" >
+
+  <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+
+    <img [routerLink]="['/']"
+      src="/assets/img/main-logo.svg"
+      fxFlexAlign="center" class="logo">
+
+  </div>
+
+  <fury-scrollbar class="sidenav-items" fxFlex>
+    <fury-sidenav-item *ngFor="let item of items$ | async" [item]="item" [level]="1"></fury-sidenav-item>
+  </fury-scrollbar>
+</div>

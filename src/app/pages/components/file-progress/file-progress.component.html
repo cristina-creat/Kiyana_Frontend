@@ -1,0 +1,4 @@
+<div class="progress-cont">
+  <div class="progress" [style.width]="file.progress + '%'" [ngClass]='{"complete":(file.progress==100 && file.status!="error" ), "error": file.status=="error"}'>
+  </div>
+</div>

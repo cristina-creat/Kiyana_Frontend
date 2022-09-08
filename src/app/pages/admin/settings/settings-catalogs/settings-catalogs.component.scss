@@ -1,0 +1,52 @@
+:host {
+    .left-sidebar {
+        background: #f3f3f3;
+        border-right: solid 1px #dedede;
+        .roles-list {  
+            .chat-contacts {
+                padding-top: 0;
+        
+                .chat-contact {
+                position: relative;
+                cursor: pointer;
+                transition: background .1s linear;
+        
+                &:hover {
+                    background: #EEE;
+                }
+        
+                .last-message {
+                    color: #888;
+                }
+                }
+            }
+        }
+    }
+    .paginator {
+        -webkit-box-shadow: 1px -2px 5px 0px rgba(0,0,0,0.25);
+        -moz-box-shadow: 1px -2px 5px 0px rgba(0,0,0,0.25);
+        box-shadow: 1px -2px 5px 0px rgba(0,0,0,0.25);
+    }
+}
+.edit-user-content{
+    padding: 20px;
+}
+  
+
+
+.permissions-list{
+    padding: 20px 30px;
+}
+  
+.settings-headers{
+    text-transform: capitalize;
+}
+
+.field__id{
+    display: none;
+}
+
+
+.mat-form-field-infix {
+    width: auto !important;
+}

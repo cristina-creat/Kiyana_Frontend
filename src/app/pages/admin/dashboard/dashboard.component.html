@@ -1,0 +1,31 @@
+<div class="padding" fxLayout="column">
+
+    <div fxLayout="row" fxLayout="space-between center">
+        <fury-breadcrumbs current="Dashboard" [crumbs]="[]"></fury-breadcrumbs>
+        <div fxFlex></div>
+        <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="10px">
+            <mat-form-field>
+                <mat-label>Fecha inicio</mat-label>
+                <input matInput [(ngModel)]="start" [matDatepicker]="start_date" placeholder="Selecciona"
+                    autocomplete="off" (click)="start_date.open()" (ngModelChange)="getServiceData()">
+                <mat-datepicker-toggle matSuffix [for]="start_date"></mat-datepicker-toggle>
+                <mat-datepicker #start_date></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Fecha fin</mat-label>
+                <input matInput [(ngModel)]="end" [matDatepicker]="end_date" placeholder="Selecciona" autocomplete="off"
+                    (click)="end_date.open()" (ngModelChange)="getServiceData()">
+                <mat-datepicker-toggle matSuffix [for]="end_date"></mat-datepicker-toggle>
+                <mat-datepicker #end_date></mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="route-animations-elements" fxLayout="column" fxLayoutGap="24px">
+        <div fxLayout="column" fxLayoutGap="24px">
+            
+            
+
+        </div>
+    </div>
+</div>

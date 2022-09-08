@@ -1,0 +1,31 @@
+<h2 mat-dialog-title>Usuario</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+
+    <p>Escribe el email y selecciona el perfil del usuario a crear.</p>
+
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+      <mat-form-field fxFlex>
+        <mat-label>Email</mat-label>
+        <input type="email" formControlName="email" matInput autocomplete="off" required>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+        <mat-form-field fxFlex>
+          <mat-label>Perfil</mat-label>
+          <mat-select formControlName="role" required>
+            <mat-option *ngFor="let rol of data.roles" [value]="rol._id">
+              {{rol.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid">Crear Usuario</button>
+    <button *ngIf="isUpdateMode()" mat-button [disabled]="!form.valid">Actualizar Usuario</button>
+  </mat-dialog-actions>
+</form>

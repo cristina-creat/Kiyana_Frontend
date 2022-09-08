@@ -1,0 +1,43 @@
+<div class="user-button" #userButton (furyClickOutside)="onClickOutside()" fxFlex="grow">
+    <button class="button" mat-button (click)="toggleDropdown()" [class.open]="isOpen" fxFlex="grow">
+    <span fxLayout="row" fxLayoutAlign="start center">
+      <img src="assets/img/avatars/noavatar.png" class="avatar" *ngIf="!loginService.identity || !loginService.identity.avatar"/>
+      <img [src]="avatarUrl + loginService.identity.avatar" class="avatar" *ngIf="loginService.identity && loginService.identity.avatar"/>
+      <span fxHide="true" fxHide.gt-sm="false" style="font-weight: 500; margin-left: 5px;">{{loginService.identity.firstname}} {{loginService.identity.lastname}}</span>
+      <mat-icon class="icon" fxHide fxShow.gt-sm>keyboard_arrow_down</mat-icon>
+    </span>
+  </button>
+
+  <div class="dropdown elevation" [class.open]="isOpen">
+    <div class="content">
+      <div class="list">
+        <div class="companies-list">
+          <h3>Tus empresas asignadas</h3>
+          <div class="item tenant-item" matRipple *ngFor="let tenant of loginService.tenants" (click)="selectTenant( tenant )" [ngClass]="{'active':tenant._id == currentTenant }">
+            <span fxFlex>{{ tenant._tenant.name }}</span>
+            <mat-icon class="icon">navigate_next</mat-icon>
+          </div>
+        </div>
+        <mat-divider *ngIf="loginService.tenants && loginService.tenants.length"></mat-divider>
+        <a class="item" matRipple routerLink="/app/users/my-account">
+          <mat-icon class="icon">account_box</mat-icon>
+          <span>{{ 'PAGES.TOOLBAR.SELECT_PROFILE' | translate }}</span>
+        </a>
+        <mat-divider *ngIf="loginService.tenants && loginService.tenants.length"></mat-divider>
+        <div class="companies-list">
+          <a class="item" matRipple routerLink="/politica-de-privacidad">
+            <span>Aviso de Privacidad</span>
+          </a>
+          <a class="item" matRipple routerLink="/terminos-condiciones">
+            <span>Términos y Condiciones</span>
+          </a>
+        </div>
+        <mat-divider *ngIf="loginService.tenants && loginService.tenants.length"></mat-divider>
+        <div class="item" matRipple (click)="logout()">
+          <mat-icon class="icon">exit_to_app</mat-icon>
+          <span>{{ 'PAGES.TOOLBAR.SELECT_EXIT' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

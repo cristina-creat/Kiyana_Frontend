@@ -1,0 +1,149 @@
+<div
+  class="padding pb-0"
+  fxLayout="column"
+  fxLayoutAlign="space-around stretch"
+  style="height: 100%"
+>
+  <fury-breadcrumbs
+    current="Detalles de la Empresa"
+    [crumbs]="breadcrumbs_crumbs"
+    back="true"
+  ></fury-breadcrumbs>
+  <div
+    class="
+      elevation
+      border-radius
+      radius-card
+      overflow-hidden
+      route-animations-elements
+    "
+    fxFlex
+  >
+    <mat-tab-group class="full-height bg-white">
+      <mat-tab label="Detalles" *ngIf="form && tenant">
+        <form [formGroup]="form">
+          <div
+            class="
+              elevation
+              
+              bg-white
+              overflow-hidden
+              route-animations-elements
+            "
+            fxFlex
+            fxLayout="column"
+          >
+            <mat-toolbar class="save-toolbar" fxLayout="row">
+              <span fxFlex></span>
+              <button mat-icon-button (click)="saveCompany()" *ngIf="editable">
+                <mat-icon>save</mat-icon>
+              </button>
+            </mat-toolbar>
+            <div
+              fxFlex="calc(100% - 64px)"
+              fxLayout="row"
+              fxLayoutAlign="start stretch"
+            >
+              <!-- Avatar container -->
+              <div fxFlex="33" class="layout-column" fxLayout="column" fxLayoutAlign="start center">
+                <h1>Logotipo de la Empresa</h1>
+                <small>*Formato PNG con transparencia, alto mínimo recomendado 120px</small>
+                <input type="file" #avatarSelect (change)="changeImage($event.target.files)" accept="image/png" style="display: none;">
+                <div class="img-container" [ngStyle]="{'background':tenant.color}" (click)="avatarSelect.click()" *ngIf="!avatarBase64 && editable">
+                  <img src="assets/img/avatars/upload.svg" class="empty-image" *ngIf="!tenant.img" />
+                  <img [src]="apiUrl + tenant.img" *ngIf="tenant.img" />
+                  <!--<img [src]="user.avatar.replace('s96','s400')" mat-list-avatar>-->
+                </div>
+                <div class="img-container no-editable" [ngStyle]="{'background':tenant.color}" *ngIf="!avatarBase64 && !editable">
+                  <img src="assets/img/avatars/upload.svg" class="empty-image" *ngIf="!tenant.img" />
+                  <img [src]="apiUrl + tenant.img" *ngIf="tenant.img" />
+                  <!--<img [src]="user.avatar.replace('s96','s400')" mat-list-avatar>-->
+                </div>
+                <div class="img-container" [ngStyle]="{'background':tenant.color}" (click)="avatarSelect.click()" *ngIf="avatarBase64">
+                  <img [src]="avatarBase64" />
+                  <!--<img [src]="user.avatar.replace('s96','s400')" mat-list-avatar>-->
+                </div>
+                <div *ngIf="editable">
+                  <h1 style="margin-top: 40px;">Color principal</h1>
+                  <div class="color-selector">
+                    <color-twitter [(color)]="tenant.color" (onChangeComplete)="setupColor($event)"></color-twitter>
+                  </div>
+                </div>
+              </div>
+              <!-- /Avatar container -->
+              <!-- Data container -->
+              <div
+                class="form-container"
+                fxFlex
+                fxLayout="column"
+                fxLayoutAlign=" stretch"
+              >
+                <h1>Detalles de la Empresa</h1>
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Nombre de la empresa</mat-label>
+                    <input type="text" formControlName="name" matInput autocomplete="off" required>
+                  </mat-form-field>
+                </div>
+            
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Calle y Número</mat-label>
+                    <input type="text" formControlName="calle" matInput autocomplete="off">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <mat-label>Colonia</mat-label>
+                    <input type="text" formControlName="colonia" matInput autocomplete="off">
+                  </mat-form-field>
+                </div>
+            
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Estado</mat-label>
+                    <input type="text" formControlName="estado" matInput autocomplete="off">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <mat-label>Municipio</mat-label>
+                    <input type="text" formControlName="municipio" matInput autocomplete="off">
+                  </mat-form-field>
+                </div>
+            
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+                  <mat-form-field fxFlex>
+                    <mat-label>C.P.</mat-label>
+                    <input type="text" formControlName="cp" matInput autocomplete="off">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <mat-label>País</mat-label>
+                    <input type="text" formControlName="pais" matInput autocomplete="off">
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <mat-label>Teléfono</mat-label>
+                    <input type="text" formControlName="tel" matInput autocomplete="off">
+                  </mat-form-field>
+                </div>
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Contacto Administrativo</mat-label>
+                    <input type="text" formControlName="contacto_admin" matInput autocomplete="off">
+                  </mat-form-field>
+                  <div fxFlex fxLayout="row" fxLayoutAlign="start center" >
+                    <mat-checkbox formControlName="status">Habilitada</mat-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </mat-tab>
+      <!--
+      <mat-tab label="Configuración" *ngIf="tenant && tenant._id">
+        <benefits-company-config [tenant]="tenant._id"></benefits-company-config>
+      </mat-tab>
+      -->
+      <mat-tab label="Roles" *ngIf="tenant && tenant._id">
+        <fury-company-roles [tenant]="tenant._id"></fury-company-roles>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

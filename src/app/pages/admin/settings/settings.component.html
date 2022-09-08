@@ -1,0 +1,6 @@
+<mat-tab-group class="full-content">
+    <mat-tab label="Catálogos"
+      *ngIf="loginService.hasPermission(['admin-catalogs-read','admin-catalogs-create','admin-catalogs-update','admin-catalogs-delete'])">
+        <fury-settings-catalogs></fury-settings-catalogs>
+    </mat-tab>
+  </mat-tab-group>

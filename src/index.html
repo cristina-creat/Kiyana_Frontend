@@ -1,0 +1,109 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>KIYANA - Sistema integral de conciliaciones</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <script src="https://apis.google.com/js/platform.js"></script>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#FF671D">
+</head>
+<style>
+  fury-root {
+    height: 100%;
+  }
+  fury-root > .background {
+    background: linear-gradient(180deg, #FF671D, #ea5e18) !important;
+    width: 100%;
+    height: 100%;
+  }
+
+  fury-root > .background > .wrapper {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+  }
+  fury-root > .background > .wrapper img {
+    width: 200px;
+    margin-bottom: 70px;
+  }
+  
+
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 30px;
+    margin-left: -15px;
+    margin-top: 20px;
+  }
+  .loading-bar {
+    display: inline-block;
+    width: 4px;
+    height: 18px;
+    border-radius: 4px;
+    animation: loading 1s ease-in-out infinite;
+  }
+  .loading-bar:nth-child(1) {
+    background-color: #ffffff;
+    animation-delay: 0;
+  }
+  .loading-bar:nth-child(2) {
+    background-color: #ffffff;
+    animation-delay: 0.09s;
+  }
+  .loading-bar:nth-child(3) {
+    background-color: #ffffff;
+    animation-delay: .18s;
+  }
+  .loading-bar:nth-child(4) {
+    background-color: #ffffff;
+    animation-delay: .27s;
+  }
+
+  @keyframes loading {
+    0% {
+      transform: scale(1);
+    }
+    20% {
+      transform: scale(1, 2.2);
+    }
+    40% {
+      transform: scale(1);
+    }
+  }
+
+</style>
+<body>
+
+<fury-root>
+  <div class="background">
+    <div class="wrapper">
+      <!--
+      <div class="ball-scale-multiple">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      -->
+      <img src="assets/img/main-logo-white.svg" />
+      <div class="loading">
+        <div class="loading-bar"></div>
+        <div class="loading-bar"></div>
+        <div class="loading-bar"></div>
+        <div class="loading-bar"></div>
+      </div>
+    </div>
+  </div>
+</fury-root>
+<noscript>Please enable JavaScript to continue using this application.</noscript>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar mat-toolbar matDialogTitle class="mat-accent m-0 title">
+    <span fxFlex></span>
+    <span class="dialog-title">
+      ¡Visita creada con éxito!
+    </span>
+    <span fxFlex></span>
+  </mat-toolbar>
+
+  <div mat-dialog-content class="p-24 m-0 text" id="mat-dialog-content">
+    <span class="message">Folio: <span class="folio">{{ folio }}</span></span>
+    <div mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+      <button mat-raised-button color="accent" style="margin-right: 10px;" (click)="onNoClick()">Cerrar</button>
+    </div>
+  </div>
+</div>

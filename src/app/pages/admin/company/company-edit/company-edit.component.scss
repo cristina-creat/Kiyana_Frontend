@@ -1,0 +1,68 @@
+@import "../../../../../styles/var";
+:host {
+    mat-list-item:hover {
+        background: rgba(0,0,0,0.05);
+    }
+    .layout-column {
+        overflow-y: auto;
+    }
+    .img-container{
+        border-radius: 5px;
+        /*border: solid 1px #29add4;*/
+        padding: 10px;
+        /* background: #FF671D !important */;
+        min-width: 150px;
+        text-align: center;
+        cursor: pointer;
+        margin-top: 20px;
+        background: #ABB8C3;
+        &.no-editable {
+            cursor: default;
+        }
+        .empty-image {
+            max-width: 150px;
+            width: 100px;
+            opacity: .4;
+            margin-left: 13px;
+        }
+        img {
+            max-width: 150px;
+        }
+        /*
+        padding: 8%;
+        img{
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 1px solid #FFB837;
+            padding: 2px;
+        }
+        */
+    }
+    
+    // .color-selector {
+    //     margin-top: 20px;
+    // }
+
+    .save-toolbar{
+        background: #FCFCFC;
+        min-height: 64px;
+        span{
+          font-size: 14px;
+          color: #434343;
+        }
+    }
+    
+    .form-container{
+        overflow-y: auto;
+        max-height: 100%;
+    }
+    
+    .disabled{
+        color: #a2a2a2;
+    }
+
+    form {
+        margin-bottom: 40px;
+    }
+}

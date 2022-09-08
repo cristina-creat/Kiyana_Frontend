@@ -1,0 +1,31 @@
+:host {
+    min-height: 100%;
+    .column-a {
+        .logo {
+            width: 170px;
+            margin-bottom: 20px;
+            margin-top: 30px;
+        }
+        .form-container {
+            width: 80%;
+        }
+        .legal {
+            margin-top: 30px;
+            opacity: .8;
+        }
+    }
+    .column-b {
+        background: rgb(213, 218, 249);
+        .whatsapp-button {
+            color: #25D366;
+            background: #fff !important;
+            margin-left: 10px;
+            img {
+                margin-right: 7px;
+            }
+        }
+        .main-img {
+            width: 100%;
+        }
+    }
+}

@@ -1,0 +1,40 @@
+<div class="toolbar-notifications" (furyClickOutside)="onClickOutside()"
+     fxFlex="grow" fxLayout="row" fxLayoutAlign="start center">
+  <button class="button" type="button" mat-button
+          (click)="toggleDropdown()" [class.open]="isOpen" fxFlex="grow">
+    <mat-icon class="icon">settings</mat-icon>
+  </button>
+
+  <div class="dropdown elevation" [class.open]="isOpen">
+    <div class="content">
+      <div class="list">
+        <div class="item" matRipple (click)="toggleDropdown()" [routerLink]="['/users']" *ngIf="loginService.validatePermissionTree('business')">
+          <mat-icon class="icon">face</mat-icon>
+          <span>{{ 'PAGES.TOOLBAR.SELECT_USERS' | translate }}</span>
+        </div>
+        <div class="item" matRipple (click)="toggleDropdown()" [routerLink]="['/business']">
+          <mat-icon class="icon">business</mat-icon>
+          <span>{{ 'PAGES.TOOLBAR.SELECT_BUSINESS' | translate }}</span>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="item" matRipple>
+          <mat-icon class="icon">format_list_numbered</mat-icon>
+          <span>Log</span>
+        </div>
+        <div class="item" matRipple (click)="toggleDropdown()" [routerLink]="['/auth-log']">
+          <mat-icon class="icon">list_alt</mat-icon>
+          <span>{{ 'PAGES.TOOLBAR.SELECT_LOG_AUTH' | translate }}</span>
+        </div>
+        <div class="item" matRipple (click)="toggleDropdown()" [routerLink]="['/security-report']">
+          <mat-icon class="icon">security</mat-icon>
+          <span>{{ 'PAGES.TOOLBAR.SELECT_REPORT_SAFE' | translate }}</span>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="item" matRipple>
+          <mat-icon class="icon">settings</mat-icon>
+          <span>{{ 'PAGES.TOOLBAR.SELECT_SETTINGS' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

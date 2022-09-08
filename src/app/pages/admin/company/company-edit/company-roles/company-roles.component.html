@@ -1,0 +1,75 @@
+
+  
+    <div class="bg-white overflow-hidden" fxFlex fxLayout="row" fxLayoutAlign="space-around stretch">
+        
+
+        <div fxFlex="350px" class="side-list" fxLayout="column">
+            <mat-toolbar>
+                <div class="toolbar" fxLayout="row" fxLayoutAlign="start center">
+                    <h4>Perfil</h4>
+                </div>
+            </mat-toolbar>
+            <div fxFlex style="overflow-y: scroll;" #scrollMe>
+                <mat-nav-list class="chat-contacts">
+                    <mat-list-item *ngFor="let rol of roles" (click)="setActiveRole(rol)"
+                    [ngClass]="{'active': current_role && rol._id==current_role._id}">
+                    <h3 class="name" mat-line>{{rol.name}}</h3>
+                    </mat-list-item>
+                </mat-nav-list>
+            </div>
+        </div>
+        <div fxFlex fxLayout="column">
+            <mat-toolbar>
+                <div class="toolbar" fxLayout="row" fxLayoutAlign="start center" *ngIf="current_role">
+                    <h4>Detalle del perfil</h4>
+                    <span fxFlex></span>
+                    <button mat-icon-button (click)="deleteRol()" *ngIf="loginService.validatePermissionTree('admin','roles','delete')">
+                        <mat-icon> delete </mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="saveRole()" [disabled]="!current_role.name" *ngIf="loginService.hasPermission('admin-roles-update')"><mat-icon> save </mat-icon></button>
+                </div>
+            </mat-toolbar>
+            <div fxFlex style="overflow-y: scroll;">
+                <div *ngIf="current_role">
+                    <div class="padding">
+                        <mat-form-field appearance="standard" fxFlex>
+                            <mat-label>Nombre del perfil:</mat-label>
+                            <input matInput name="name" required placeholder="Nombre del perfil" [(ngModel)]="current_role.name">
+                        </mat-form-field>
+                    </div>
+                    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+                        <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                        <button mat-icon-button disabled></button>
+                        <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)"
+                            (change)="todoLeafItemSelectionToggle(node)" [disabled]="!loginService.hasPermission('admin-roles-update')">{{node.item}}</mat-checkbox>
+                        </mat-tree-node>
+            
+                        <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
+                            <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                            </mat-icon>
+                        </button>
+                        <mat-checkbox [checked]="descendantsAllSelected(node)"
+                            [indeterminate]="descendantsPartiallySelected(node)" (change)="todoItemSelectionToggle(node)"
+                            [disabled]="!loginService.hasPermission('admin-roles-update')">
+                            {{node.item}}</mat-checkbox>
+                        </mat-tree-node>
+                    </mat-tree>
+                </div>
+            </div>
+            <button class="create fab-bottom" (click)="createRole()" type="button" mat-mini-fab color="accent" *ngIf="loginService.hasPermission('admin-roles-create')">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+        <!--
+        <button class="create fab-bottom" (click)="createRole()" type="button" mat-mini-fab color="accent">
+            <mat-icon>add</mat-icon>
+        </button>
+        -->
+  
+    </div>
+  
+
+  

@@ -1,0 +1,390 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+
+<mat-dialog-content>
+  <input
+    type="file"
+    (change)="uploadFile($event.target.files)"
+    [accept]="file_format"
+    #fileSelect
+    style="display: none"
+  />
+  <div *ngFor="let col of displayedColumns; trackBy: trackByIdx">
+    <div
+      fxFlex
+      *ngIf="!external_collections[col] && description[col].type"
+      [ngSwitch]="description[col].type"
+    >
+      <div *ngSwitchCase="'boolean'">
+        <mat-form-field appearance="outline" fxFlex>
+          <div style="display: none">
+            <input matInput autocomplete="off" />
+          </div>
+          <mat-slide-toggle [(ngModel)]="item[col]">
+            {{ description[col].label }}
+          </mat-slide-toggle>
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="'array'" class="outline-element">
+        <div class="heading">
+          <span>{{ description[col].label }}</span>
+        </div>
+        <div
+          *ngFor="let subitem of item[col]; let i = index; trackBy: trackByIdx"
+          fxLayout="row"
+          [ngSwitch]="description[col].items"
+        >
+          <mat-form-field appearance="fill" fxFlex *ngSwitchCase="'boolean'">
+            <div style="display: none">
+              <input matInput autocomplete="off" />
+            </div>
+            <mat-slide-toggle [(ngModel)]="item[col][i]">
+              Item {{ i + 1 }}
+            </mat-slide-toggle>
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="removeSubitem(item[col], i)"
+            >
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field appearance="fill" fxFlex *ngSwitchCase="'number'">
+            <mat-label>Item {{ i + 1 }}</mat-label>
+            <input
+              matInput
+              type="number"
+              autocomplete="off"
+              [(ngModel)]="item[col][i]"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="removeSubitem(item[col], i)"
+            >
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <div fxFlex *ngSwitchCase="'object'" class="outline-element">
+            <div class="heading">
+              <span>Item {{ i + 1 }}</span>
+            </div>
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="removeSubitem(item[col], i)"
+            >
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+            <div
+              *ngFor="
+                let key of getKeys(description[col].description);
+                trackBy: trackByIdx
+              "
+            >
+              <div
+                *ngIf="key != '_id'"
+                [ngSwitch]="description[col].description[key].type"
+              >
+                <div *ngSwitchCase="'boolean'">
+                  <mat-form-field appearance="fill" fxFlex>
+                    <div style="display: none">
+                      <input matInput autocomplete="off" />
+                    </div>
+                    <mat-slide-toggle [(ngModel)]="item[col][i][key]">
+                      {{ description[col].description[key].label }}
+                    </mat-slide-toggle>
+                  </mat-form-field>
+                </div>
+                <div *ngSwitchCase="'number'">
+                  <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>{{ description[col].description[key].label }}</mat-label>
+                    <input
+                      matInput
+                      type="number"
+                      autocomplete="off"
+                      [(ngModel)]="item[col][i][key]"
+                    />
+                  </mat-form-field>
+                </div>
+                <div *ngSwitchCase="'file'" class="outline-element">
+                  <div class="heading">
+                    <span>{{ description[col].description[key].label }}</span>
+                  </div>
+                  <div fxLayout="column">
+                    <div fxLayout="row">
+                      <mat-form-field appearance="fill" fxFlex>
+                        <input
+                          matInput
+                          autocomplete="off"
+                          [(ngModel)]="item[col][i][key]"
+                          placeholder="Escribe una URL o sube un archivo"
+                        />
+                        <button
+                          mat-icon-button
+                          matSuffix
+                          (click)="item[col][i][key] = ''"
+                        >
+                          <mat-icon>clear</mat-icon>
+                        </button>
+                      </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="end start">
+                      <button
+                        mat-raised-button
+                        color="accent"
+                        class="add-button"
+                        (click)="
+                          uploadItem(
+                            item[col][i],
+                            description[col].description[key].format,
+                            key
+                          )
+                        "
+                      >
+                        <mat-icon>cloud_upload</mat-icon>
+                        Upload
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div *ngSwitchDefault>
+                  <mat-form-field appearance="fill" fxFlex>
+                    <mat-label>{{
+                      description[col].description[key].label
+                    }}</mat-label>
+                    <input
+                      matInput
+                      autocomplete="off"
+                      [(ngModel)]="item[col][i][key]"
+                    />
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <mat-form-field appearance="fill" fxFlex *ngSwitchDefault>
+            <mat-label>Item {{ i + 1 }}</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="item[col][i]" />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="removeSubitem(item[col], i)"
+            >
+              <mat-icon>remove_circle_outline</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <!--
+          <mat-form-field appearance="fill" fxFlex>
+            <mat-label>Item {{ i }}</mat-label>
+            <input matInput autocomplete="off" [(ngModel)]="item[col][i]">
+            <button mat-icon-button matSuffix (click)="removeSubitem(item[col],i)">
+              <mat-icon >remove_circle_outline</mat-icon>
+            </button>
+          </mat-form-field>
+          -->
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center">
+          <button
+            mat-raised-button
+            color="accent"
+            class="add-button"
+            (click)="addSubitem(item[col], col)"
+          >
+            Nuevo
+          </button>
+        </div>
+      </div>
+      <div *ngSwitchCase="'object'" class="outline-element">
+        <div class="heading">
+          <span>{{ description[col].label }}</span>
+        </div>
+        <div
+          *ngFor="
+            let key of getKeys(description[col].items);
+            trackBy: trackByIdx
+          "
+        >
+          <div
+            *ngIf="key != '_id'"
+            [ngSwitch]="description[col].items[key].type"
+          >
+            <div *ngSwitchCase="'boolean'">
+              <mat-form-field appearance="fill" fxFlex>
+                <div style="display: none">
+                  <input matInput autocomplete="off" />
+                </div>
+                <mat-slide-toggle [(ngModel)]="item[col][key]">
+                  {{ description[col].items[key].label }}
+                </mat-slide-toggle>
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'number'">
+              <mat-form-field appearance="fill" fxFlex>
+                <mat-label>{{ description[col].items[key].label }}</mat-label>
+                <input
+                  matInput
+                  type="number"
+                  autocomplete="off"
+                  [(ngModel)]="item[col][key]"
+                />
+              </mat-form-field>
+            </div>
+            <div *ngSwitchCase="'file'" class="outline-element">
+              <div class="heading">
+                <span>{{ description[col].items[key].label }}</span>
+              </div>
+              <div fxLayout="column">
+                <div fxLayout="row">
+                  <mat-form-field appearance="fill" fxFlex>
+                    <input
+                      matInput
+                      autocomplete="off"
+                      [(ngModel)]="item[col][key]"
+                      placeholder="Escribe una URL o sube un archivo"
+                    />
+                    <button
+                      mat-icon-button
+                      matSuffix
+                      (click)="item[col][key] = ''"
+                    >
+                      <mat-icon>clear</mat-icon>
+                    </button>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="end start">
+                  <button
+                    mat-raised-button
+                    color="accent"
+                    class="add-button"
+                    (click)="
+                      uploadItem(
+                        item[col],
+                        description[col].items[key].format,
+                        key
+                      )
+                    "
+                  >
+                    <mat-icon>cloud_upload</mat-icon>
+                    Upload
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div *ngSwitchDefault>
+              <mat-form-field appearance="fill" fxFlex>
+                <mat-label>{{ description[col].items[key].label }}</mat-label>
+                <input
+                  matInput
+                  autocomplete="off"
+                  [(ngModel)]="item[col][key]"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchCase="'number'">
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>{{ description[col].label }}</mat-label>
+          <input
+            matInput
+            type="number"
+            autocomplete="off"
+            [(ngModel)]="item[col]"
+          />
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="'date'">
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>{{ description[col].label }}</mat-label>
+          <input matInput [matDatepicker]="picker" [(ngModel)]="item[col]">
+          <mat-hint>DD/MM/YYYY</mat-hint>
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div *ngSwitchCase="'file'" class="outline-element">
+        <div class="heading">
+          <span>{{ description[col].label }}</span>
+        </div>
+        <div fxLayout="column">
+          <div fxLayout="row">
+            <mat-form-field appearance="fill" fxFlex>
+              <input
+                matInput
+                autocomplete="off"
+                [(ngModel)]="item[col]"
+                placeholder="Escribe una URL o sube un archivo"
+              />
+              <button mat-icon-button matSuffix (click)="item[col] = ''">
+                <mat-icon>clear</mat-icon>
+              </button>
+            </mat-form-field>
+          </div>
+          <div fxLayout="row" fxLayoutAlign="end start">
+            <button
+              mat-raised-button
+              color="accent"
+              class="add-button"
+              (click)="uploadItem(col, description[col].format)"
+            >
+              <mat-icon>cloud_upload</mat-icon>
+              Upload
+            </button>
+          </div>
+        </div>
+      </div>
+      <div *ngSwitchDefault>
+        <mat-form-field appearance="outline" fxFlex>
+          <mat-label>{{ description[col].label }}</mat-label>
+          <input matInput autocomplete="off" [(ngModel)]="item[col]" />
+        </mat-form-field>
+      </div>
+    </div>
+    <div *ngIf="external_collections[col]">
+      <mat-form-field fxFlex>
+        <mat-label>{{ description[col].label }}</mat-label>
+        <mat-select [(ngModel)]="item[col]">
+          <mat-option
+            *ngFor="let ext of external_collections[col]"
+            [value]="ext._id"
+          >
+            {{ ext.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button
+    mat-icon-button
+    aria-label="Borrar item"
+    (click)="removeItem()"
+    *ngIf="item._id && loginService.hasPermission('admin-catalogs-delete')"
+  >
+    <mat-icon>delete</mat-icon>
+  </button>
+  <span fxFlex></span>
+  <button mat-button (click)="close()">Cancelar</button>
+  <button
+    mat-flat-button
+    (click)="saveItem()"
+    color="primary"
+    *ngIf="!item._id && loginService.hasPermission('admin-catalogs-create')"
+  >
+    Guardar
+  </button>
+  <button
+    mat-flat-button
+    (click)="saveItem()"
+    color="primary"
+    *ngIf="item._id && loginService.hasPermission('admin-catalogs-update')"
+  >
+    Guardar
+  </button>
+</mat-dialog-actions>

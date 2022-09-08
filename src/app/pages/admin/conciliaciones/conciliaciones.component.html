@@ -1,0 +1,177 @@
+<div
+  class="padding pb-0"
+  fxLayout="column"
+  fxLayoutAlign="space-around stretch"
+  style="height: 100%"
+>
+  <fury-breadcrumbs current="Conciliaciones" [crumbs]="[]"></fury-breadcrumbs>
+
+  <div
+    class="
+      elevation
+      border-radius
+      radius-card
+      overflow-hidden
+      route-animations-elements
+    "
+    fxFlex
+  >
+  
+    <fury-list
+      [columns]="columns"
+      (filterChange)="onFilterChange($event)" 
+    >
+      <div class="actions">
+          <!--
+        <button mat-icon-button (click)="exportUsers()">
+          <mat-icon>cloud_download</mat-icon>
+        </button>
+        <button
+          class="fury-column-filter"
+          type="button"
+          mat-icon-button
+          [matMenuTriggerFor]="moreMenu"
+          *ngIf="
+            loginService.hasPermission(['admin-roles-read', 'admin-users-bulk'])
+          "
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        -->
+      </div>
+      <!--
+      <mat-menu #moreMenu="matMenu" yPosition="below" xPosition="before">
+        <button
+          class="checkbox-item mat-menu-item"
+          routerLink="roles"
+          *ngIf="loginService.hasPermission('admin-roles-read')"
+        >
+          <mat-icon>group</mat-icon>
+          Perfiles
+        </button>
+        
+        <div style="display: none">
+          <input
+            type="file"
+            #importUsersButton
+            (change)="importUsers($event)"
+            accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          /> 
+        </div>
+    </mat-menu>
+    -->
+
+      <div fxFlex style="overflow-y: scroll">
+        <mat-table #table [dataSource]="dataSource" matSort>
+          
+          <ng-container *ngFor="let column of columns">
+            <ng-container
+              *ngIf="column.isModelProperty"
+              [matColumnDef]="column.property"
+            >
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ column.name }}</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">{{ row[column.property] }}</mat-cell>
+            </ng-container>
+          </ng-container>
+
+          <ng-container matColumnDef="created_at">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >Fecha</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              {{ row.created_at | date : 'dd/MM/yyyy h:mma' }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <mat-header-cell
+              *matHeaderCellDef
+              mat-sort-header
+            >Status</mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <div [ngSwitch]="row.status">
+                <mat-icon *ngSwitchCase="'pending'" matTooltip="Procesando">query_builder</mat-icon>
+                <mat-icon *ngSwitchCase="'failed'" [matTooltip]="row.extradata ? 'Error: '+row.extradata.name : 'Error al procesar' ">error</mat-icon>
+                <mat-icon *ngSwitchCase="'proccessed'" matTooltip="Completado" color="accent">done_all</mat-icon>
+              </div>
+            </mat-cell>
+          </ng-container>
+          
+          <ng-container matColumnDef="actions">
+            <mat-header-cell
+              class="actions-cell"
+              *matHeaderCellDef
+              mat-sort-header
+            >Acciones</mat-header-cell>
+            <mat-cell class="actions-cell" *matCellDef="let row">
+              
+              <!--
+              <button
+                type="button"
+                mat-icon-button
+                [matMenuTriggerFor]="actionsMenu"
+                (click)="$event.stopPropagation()"
+              >
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+
+              <mat-menu
+                #actionsMenu="matMenu"
+                yPosition="below"
+                xPosition="before"
+              >
+                <button
+                  (click)="router.navigate(['/users/edit/' + row._id])"
+                  mat-menu-item
+                >
+                  <span>Editar</span>
+                </button>
+                <button (click)="deleteUser(row)" mat-menu-item>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+              -->
+              <!--
+              <button
+                type="button"
+                mat-icon-button
+                (click)="reloadConciliacion( $event, row._id )"
+                matTooltip="Procesar archivos descargados"
+                *ngIf="row.status == 'proccessed'"
+              >
+                <mat-icon>sync</mat-icon>
+              </button>
+              -->
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row
+            *matHeaderRowDef="visibleColumns; sticky: true"
+          ></mat-header-row>
+          <mat-row
+            *matRowDef="let row; columns: visibleColumns"
+            class="clickable route-animations-elements"
+            [routerLink]="row._id"
+          ></mat-row>
+        </mat-table>
+        
+      </div>
+
+      <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+    </fury-list>
+
+    <button
+      class="create fab-bottom"
+      *ngIf="loginService.hasPermission('admin-conciliaciones-create')"
+      (click)="createConciliacion()"
+      type="button"
+      mat-mini-fab
+      color="accent"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

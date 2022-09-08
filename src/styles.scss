@@ -1,0 +1,661 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~normalize.css/normalize.css';
+@import '~angular-calendar/scss/angular-calendar.scss';
+@import "~highlight.js/styles/androidstudio.css";
+@import "~quill/dist/quill.snow.css";
+@import "~simplebar/dist/simplebar.css";
+@import '~angular-tree-component/dist/angular-tree-component.css';
+
+@import "styles/var";
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+@import "styles/themes";
+@import "styles/tables";
+@import "styles/cards";
+@import "styles/inbox";
+@import "styles/calendar";
+@import "styles/misc";
+@import "styles/forms";
+@import "styles/tabs";
+@import "styles/utilities";
+
+@keyframes pageLoad {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fury-page-load-animation {
+  opacity: 1;
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  animation: pageLoad ease-in-out 1;
+  animation-fill-mode: forwards;
+  animation-duration: 400ms;
+  animation-delay: 600ms;
+  background: $sidenav-background;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.chart-widget {
+  .title-container {
+    padding: 20px;
+  }
+}
+
+ms-main-content,
+benefits-polizas,
+fury-covid,
+mat-tab-group.full-height {
+  display: block;
+  height: calc(100%);
+  .mat-tab-body-wrapper, mat-card, mat-card-content{
+    height: 100%;
+    max-height: 100%;
+  }
+}
+
+a {
+  color: $inter-blue;
+  text-decoration: none;
+}
+
+.full-height{
+  height: 100%;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.folio {
+  font-size: 13px;
+  color: #343434;
+  background: #F3F3F3;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.badge.primary, .badge.success{
+  background-color: #8BC34A;
+}
+
+.badge.warning{
+  background-color: #FFC425;
+}
+
+.badge.danger{
+  background-color: #F44336;
+}
+
+.badge.badge-title{
+  font-size: .7em;
+  min-width: 76px;
+}
+
+.full-height-bar{
+  height: calc(100% - #{$height__main-toolbar} );
+}
+
+.action-buttons{
+  height: $height__main-toolbar;
+  background-color: #f5f5f5;
+  padding: 0px 20px;
+  display: block;
+}
+
+.date-buttons{
+  height: $height__main-toolbar;
+  padding: 6px 10px;
+  background-color: #ededed;
+}
+
+.flex-column-inline-left{
+  border-right: solid 1px #c5c5c5;
+}
+
+.flex-column-inline-right{
+  border-left: solid 1px #c5c5c5;
+  margin-left: -1px;
+}
+
+.toolbar{
+  width:100%;
+
+  h4{
+    margin-top: 10px;
+    margin-left: 8px;
+    padding-bottom: 10px;
+    font-size: .9em;
+    font-weight: 400;
+  }
+}
+
+.content-no-scroll{
+  overflow-y: hidden;
+  overflow-x: hidden
+}
+
+.content-auto-scroll{
+  height: calc(100% - #{$height__main-toolbar} - #{$height__main-toolbar} );
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.content-auto-scroll-no-bar-x{
+  height: calc(100% - #{$height__main-toolbar} );
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.content-auto-scroll-no-bar{
+  height: calc(100% - #{$height__main-toolbar} );
+  overflow-y: auto;
+}
+
+.content-auto-scroll-expired-events{
+  height: 222px;
+  overflow-y: hidden;
+}
+
+.users-container {
+  background: #F5F5F5;
+  padding-top: .6rem;
+  padding-bottom: .6rem;
+  text-align: center;
+  border-top: solid 1px #E3E3E3;
+  border-bottom: solid 1px #E3E3E3;
+  margin-bottom: 1rem;
+  overflow-x: scroll;
+  .categories-title {
+    font-size: 1.4rem;
+    font-weight: 400;
+    color: #5d5d5d;
+    margin: 8px 0px 20px;
+  }
+
+  .horizontal-categories {
+    .scroll-content
+    {
+      position: relative;
+      contain: style layout;
+     
+    }
+
+    .categories-row
+    {
+
+      &::after{
+        content: '';
+        flex: 0 0 5px;
+        max-width:5px;
+      }
+    }
+
+    .horizontal-item{
+      min-width: 90px;
+      max-width: 90px;
+      padding: 0px 0px 0px 10px;
+      img {
+        border-radius: 50%;
+        width: 100%;
+        height: auto;
+        cursor: pointer;
+      }
+      .username {
+        
+        color: #666;
+      }
+    }
+  }
+}
+
+.avatar-flex {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.small-table{
+  font-size: 12px;
+}
+
+.kasax-table{
+  th .label{
+    margin-bottom: 4px !important;
+    display: block;
+  }
+  .mat-input-wrapper{
+    margin: 0;
+  }
+  .mat-select-placeholder, .mat-select-trigger{
+    font-size: 14px;
+  }
+  .mat-select-placeholder.mat-floating-placeholder{
+    top: -19px !important;
+  }
+  .id-input{
+    width: 50px;
+  }
+  .oportunity-input, .cliente-input, .vendedor-input{
+    width: 97px;
+  }
+}
+
+.mat-list-item.active{
+  background-color: $theme-color-primary;
+  color: #fff !important;
+}
+.chat-contact:hover{
+  background: $theme-color-primary !important;
+  color: #fff !important;
+}
+.catalog-table {
+  width: 100%;
+  tbody {
+      overflow-y: auto;
+      height: 200px;
+      .col-tools {
+          width: 85px;
+      }
+  }
+  .mat-column-tools {
+    width: 85px;
+  }
+}
+
+.dark-widget {
+  .title-container {
+    color: #fff;
+    background: linear-gradient(180deg, rgb(85, 88, 97), rgb(45, 49, 60));
+    .title {
+      color: #fff;
+    }
+  }
+}
+
+.badge,
+mat-chip{
+  background-color: #777777;
+  color: #fff;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+.badge.white{
+  background-color: rgba(255, 255, 255, 0.5);
+  color: #4c4c4c;
+}
+.badge.primary, .badge.success{
+  background-color: #8BC34A;
+}
+.mat-chip.mat-standard-chip.mat-chip-selected.mat-success {
+  background-color: #8BC34A;
+  color: white;
+}
+.badge.warning{
+  background-color: #FFC425;
+}
+.badge.danger.mat-danger{
+  background-color: #F44336;
+}
+.badge.badge-title{
+  font-size: .7em;
+}
+.badge.badge-small{
+  padding: 0px 4px;
+  border-radius: 12px;
+  min-width: 21px;
+  font-size: 13px;
+  display: inline-block;
+  text-align: center;
+  line-height: 18px;
+}
+
+.hidden, [hidden]{
+  display: none !important;
+}
+
+.padded-20{
+  padding: 20px;
+}
+
+.no-padd{
+  padding: 0 !important;
+}
+
+.custom-toolbar-color{
+  background: #FBFBFB;
+}
+
+.small-select {
+  .mat-select-trigger{
+      font-size: 14px !important;
+  }
+}
+
+.mat-icon-custom{
+  background-color: #c4c4c4;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+  border-radius: 50%;
+}
+
+.radius-card {
+  border-radius:  8px 8px 0 0;
+}
+.pb-0 {
+  padding-bottom: 0;
+}
+.p-24 {
+  padding: 24px;
+}
+
+.fab-bottom {
+  position: fixed !important;
+  right: 20px;
+  bottom: 20px;
+}
+.mat-paginator-container {
+  padding-right: 40px !important;
+}
+
+.bg-white {
+  background: #fff;
+}
+
+
+
+/*
+*
+* Table
+*
+*/
+.fury-list-table {
+  display: flex;
+  flex-direction: column;
+
+  .fury-list-header {
+    background: white;
+    padding-left: $spacing;
+    padding-right: $spacing;
+    border-bottom: 1px solid $theme-divider;
+    height: 60px;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+
+    @include media-xs {
+      height: auto;
+      padding-top: $spacing;
+      padding-bottom: $spacing;
+    }
+
+    .fury-list-name {
+      color: $color;
+      border-right: 1px solid $theme-divider;
+      font-size: 20px;
+      line-height: 32px;
+      font-weight: 500;
+      padding-right: $spacing;
+
+      @include media-xs {
+        border-right: none;
+      }
+    }
+
+    .fury-filter-input {
+      font-size: 16px;
+      line-height: 1.125;
+      border: none;
+      height: 32px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .fury-filter-input-icon {
+      width: 1.2em;
+      color: $theme-icon;
+      vertical-align: bottom;
+      height: 22px;
+      font-size: 22px;
+      margin-right: $padding-xs;
+    }
+
+    .fury-column-filter {
+      color: $theme-icon;
+    }
+  }
+
+  .mat-header-row {
+    background: #F5F5F5;
+
+    .mat-header-cell .mat-sort-header-button {
+      text-transform: uppercase;
+    }
+  }
+
+  .mat-row {
+
+    &:hover {
+      background: rgba(black, 0.04);
+    }
+  }
+
+  .mat-cell.image-cell, .mat-header-cell.image-cell {
+    flex: 0;
+    min-width: 35px + $spacing;
+
+    img {
+      border-radius: 50%;
+      height: 35px;
+      width: 35px;
+      margin-right: $spacing;
+      vertical-align: middle;
+    }
+  }
+
+  .mat-cell.actions-cell, .mat-header-cell.actions-cell {
+    /*flex: 0;
+    min-width: 40px;
+    overflow: visible;
+    */
+
+    button {
+      color: $theme-icon;
+    }
+  }
+
+  .paginator {
+    display: block;
+    background: #F5F5F5;
+  }
+
+  /**
+    Responsive Table
+   */
+  .fury-mobile-label {
+    display: none;
+  }
+
+  @include media-xs {
+    .fury-mobile-label {
+      width: 80px;
+      display: inline-block;
+      font-weight: 500;
+    }
+
+    .mat-header-row {
+      display: none;
+    }
+
+    .mat-row {
+      flex-direction: column;
+      align-items: start;
+      padding: $spacing/3 $spacing;
+      min-height: auto;
+    }
+
+    .mat-cell {
+      padding-top: $spacing/3;
+    }
+  }
+  .add-button {
+    position: absolute;
+    bottom: 70px;
+    right: 10px;
+  }
+  .clickable {
+    cursor: pointer;
+  }
+}
+
+
+/*
+* EXPANDETE
+*/
+.checkout-details {
+  .mat-dialog-container {
+      padding: 0;
+      overflow: auto;
+      max-height: 90vh;
+  }
+}
+
+/*
+*
+* DIALOGS
+*
+*/
+.mat-dialog-title {
+  margin: -24px -24px 10px -24px !important;
+  padding: 20px;
+  background: $theme-color-primary;
+  color: #fff;
+}
+
+
+
+
+/*
+*
+* VAERSIÓN 2.0
+*
+*/
+
+.mat-toolbar {
+  /*background: $theme-color-primary !important;*/
+  background: #4c4c4c !important;
+  color: #fff !important;
+}
+
+.button-rounded {
+border-radius: 18px !important;
+}
+
+.radius-card {
+border-radius: 8px 8px 0 0 !important;
+}
+.card-list fury-list {
+height: 100%;
+border-radius: 8px 8px 0 0 !important;
+}
+.fab-bottom {
+position: fixed !important;
+right: 20px;
+bottom: 20px;
+}
+.pb-0 {
+padding-bottom: 0 !important;
+}
+
+fury-breadcrumbs {
+margin-bottom: 16px;
+}
+
+mat-row.clickable {
+cursor: pointer;
+}
+
+mat-tab-group.full-content {
+.mat-tab-body-wrapper {
+  height: 100%;
+}
+}
+
+.full-height {
+height: 100%;
+}
+
+.add-button {
+position: absolute !important;
+bottom: 50px;
+right: 10px;
+}
+.clickable {
+cursor: pointer;
+}
+
+.mat-dialog-title {
+      margin: -24px -24px 24px -24px !important;
+      padding: 14px !important;
+      background: $theme-color-primary;
+      color: #fff !important;
+      font-size: 1.2em !important;
+  }
+  mat-step-header {
+    background-color: transparent !important;
+}
+
+@media (max-width: 959px) {
+  .mat-horizontal-stepper-header-container {
+      align-items: flex-start !important;
+      flex-direction: column;
+  }
+  .mat-step-header[ng-reflect-selected=false]  {
+    display: none !important;
+  }
+}
+
+/*
+*
+*   ALERT BOXES
+*
+*/
+.alert {
+  padding: 10px 14px;
+  border-radius: 6px;
+  &.alert-warn {
+    background: $theme-color-warn;
+    color: $theme-color-warn-contrast;
+  }
+}
+
+/*
+*
+* Progress Bar
+*
+*/
+.mat-progress-bar.big-progress {
+  height: 10px !important;
+  border-radius: 5px;
+}

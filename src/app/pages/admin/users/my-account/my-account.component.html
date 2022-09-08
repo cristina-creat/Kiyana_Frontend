@@ -1,0 +1,136 @@
+<div class="padding pb-0" fxLayout="column" fxLayoutAlign="space-around stretch" style="height: 100%;">
+
+  <fury-breadcrumbs current="Mi perfil de usuario" [crumbs]="breadcrumbs_crumbs" back="true"></fury-breadcrumbs>
+
+  <div class="elevation border-radius radius-card overflow-hidden route-animations-elements" fxFlex>
+    <form #UserForm="ngForm" style="height: 100%;">
+      <div class="elevation bg-white overflow-hidden route-animations-elements" fxFlex fxLayout="column"
+        *ngIf="user">
+
+        
+
+        <div fxFlex="100" fxLayout="row" fxLayoutAlign="start stretch">
+
+          <div fxFlex></div>
+          <div class="profile-card" fxFlex="50" fxLayout="column" fxLayoutAlign=" stretch">
+            <!-- Data container -->
+            <div class="form-container" fxLayout="column" fxLayoutAlign=" stretch">
+              <h3>Datos globales</h3>
+              <!--
+              <div class="img-container">
+                <img src="assets/img/avatars/noavatar.png" mat-list-avatar *ngIf="!user.avatar">
+                <img [src]="avatarUrl + user.avatar" mat-list-avatar *ngIf="user.avatar">
+              </div>
+              -->
+              <div fxLayout="row" fxLayoutGap="20px">
+                <mat-form-field fxFlex appearance="outline">
+                  <mat-label>Nombre</mat-label>
+                  <input matInput name="name" type="text" [disabled]="!userCanEdit" autocomplete="off"
+                    [(ngModel)]="user.firstname">
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="outline">
+                  <mat-label>Apellidos </mat-label>
+                  <input matInput name="lastname" type="text" [disabled]="!userCanEdit" autocomplete="off"
+                    [(ngModel)]="user.lastname">
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutGap="20px">
+                <mat-form-field fxFlex appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input matInput name="email" type="text" [disabled]="!userCanEdit" autocomplete="off" required
+                    [(ngModel)]="user.email">
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="outline">
+                  <mat-label>Sexo</mat-label>
+                  <mat-select name="sexo" [disabled]="!userCanEdit" [(ngModel)]="user.sexo">
+                    <mat-option value="M">Masculino</mat-option>
+                    <mat-option value="F">Femenino</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row" fxLayoutGap="20px">
+                <mat-form-field fxFlex appearance="outline" *ngIf="loginService.identity.role == 'Admin'">
+                  <mat-label>Perfil global</mat-label>
+                  <mat-select name="role" required [disabled]="!userCanEdit || loginService.identity.role != 'Admin'"
+                    [(ngModel)]="user.role">
+                    <mat-option *ngFor="let role of mainProfiles" value="{{role.value}}">{{ role.key }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-hint style="margin-bottom: 65px;">* Cambiar tu perfil global hará que pierdas algunas funcionalidades.</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="outline" class="password-field">
+                  <mat-label>Nueva Contraseña</mat-label>
+                  <input matInput name="password" [type]="passwordType" [disabled]="!userCanEdit" autocomplete="off"
+                    [(ngModel)]="user.password">
+                  <mat-icon matSuffix *ngIf="passwordType=='password'" (click)="passwordType='text'">visibility</mat-icon>
+                  <mat-icon matSuffix *ngIf="passwordType=='text'" (click)="passwordType='password'">visibility_off</mat-icon>
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row">
+                <span fxFlex></span>
+                <button mat-raised-button color="primary" [disabled]="!UserForm.valid || !userCanEdit" (click)="saveUser()"
+                  *ngIf="userCanEdit">
+                  Actualizar
+                </button>
+              </div>
+
+              <p>
+                <small>Los ajustes dentro de la empresa deben ser gestionados por el administrador de la misma empresa.</small>
+              </p>
+
+              <div style="margin-bottom: 20px;"></div>
+
+            </div>
+            <!-- /Data container -->
+          </div>
+          <div fxFlex></div>
+          <!--
+          <div class="local-profile" fxFlex fxLayout="column" fxLayoutAlign=" stretch">
+            <div class="form-container" fxLayout="column" fxLayoutAlign="start stretch">
+              <h3>Perfil en la empresa</h3>
+
+              <div fxLayout="row" fxLayoutGap="20px">
+                <mat-form-field fxFlex appearance="outline">
+                  <mat-label>ID Colaborador</mat-label>
+                  <input matInput name="id_colaborador" type="text" [disabled]="!userCanEdit" autocomplete="off"
+                    [(ngModel)]="user._tenants.id_colaborador">
+                </mat-form-field>
+
+                <mat-form-field fxFlex appearance="outline">
+                  <mat-label>Teléfono de contacto</mat-label>
+                  <input matInput name="contact_phone" type="text" [disabled]="!userCanEdit" autocomplete="off"
+                    [(ngModel)]="user._tenants.contact_phone">
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="20px" *ngIf="loginService.identity.role == 'Admin'">
+                <mat-form-field fxFlex appearance="outline">
+                  <mat-label>Perfil</mat-label>
+                  <mat-select name="_role" required [disabled]="!userCanEdit" [(ngModel)]="user._tenants._role">
+                    <mat-option *ngFor="let role of roles" [value]="role._id">{{ role.name }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                
+              </div>
+
+              
+
+              <div style="margin-bottom: 20px;"></div>
+            </div>
+          </div>
+          -->
+
+
+
+        </div>
+
+      </div>
+    </form>
+  </div>
+</div>

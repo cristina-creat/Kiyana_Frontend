@@ -1,0 +1,102 @@
+<div class="full-height" fxLayout="column" fxLayout.gt-md="row" fxLayoutAlign="start stretch">
+  <!-- Catalog List -->
+  <div fxFlex="250px" fxLayout="column" class="left-sidebar">
+    <div fxFlex style="overflow-y: auto">
+      <div class="roles-list">
+        <mat-nav-list class="chat-contacts">
+          <mat-list-item class="chat-contact" *ngFor="let item of collections" (click)="setupCollection( item )" [ngClass]="{active: (item==currentCollection)}">
+            <h3 class="name" mat-line>{{ item }}</h3>
+          </mat-list-item>
+        </mat-nav-list>
+      </div>
+    </div>
+  </div>
+  <!-- Catalog List -->
+  
+  <!-- Catalog Details -->
+  <div fxFlex fxLayout="column" *ngIf="loginService.validatePermissionTree('admin','catalogs')">
+
+    <div fxFlex style="overflow: auto;" class="fury-list-table">
+      <mat-table #table [dataSource]="dataSource" matSort>
+    
+        <!--- Note that these columns can be defined in any order.
+                The actual rendered columns are set as a property on the row definition" -->
+
+
+
+        <!-- fullName Column -->
+        <ng-container *ngFor="let col of displayedColumns">
+            <ng-container [matColumnDef]="col">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> {{ col }}</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="fury-mobile-label">{{ col }}</span>
+                <div *ngIf="!external_collections[col]" [ngSwitch]="typeof(element[col])">
+                  <div *ngSwitchCase="'boolean'">
+                    <span *ngIf="element[col]">Sí</span>
+                    <span *ngIf="!element[col]">NO</span>
+                  </div>
+                  <div *ngSwitchCase="'date'">
+                    {{ element[col] | date : 'medium' }}
+                  </div>
+                  <div *ngSwitchCase="'array'">
+                    {{ element[col].length }} Items
+                    <!--
+                    <div *ngFor="let subitem of element[col]; let i=index" fxLayout="row" fxLayoutAlign="start center">
+                      <div [ngSwitch]="typeof( subitem )">
+                        <div *ngSwitchCase="'boolean'">
+                          <span *ngIf="subitem">Sí</span>
+                          <span *ngIf="!subitem">NO</span>
+                        </div>
+                        <div *ngSwitchCase="'object'">
+                          <div *ngFor="let key of getKeys( subitem )">
+                            <div *ngIf="key != '_id'">
+                              <span>{{ key }}: </span><span>{{ subitem[key] }}</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngSwitchDefault>
+                          {{ element[col] }}
+                        </div>
+                      </div>
+                    </div>
+                    -->
+                  </div>
+                  <div *ngSwitchCase="'object'">
+                    <div *ngFor="let key of getKeys( element[col] )">
+                      <div *ngIf="key != '_id'">
+                        <span>{{ key }}: </span><span>{{ element[col][key] }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngSwitchDefault>
+                    {{ element[col] }}
+                  </div>
+                </div>
+                <span *ngIf="external_collections[col]">{{ getFromExternal( external_collections[col], element[col] ) }}</span>
+            </mat-cell>
+            </ng-container>
+        </ng-container>
+
+        
+
+
+        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"
+                class="clickable route-animations-elements" (click)="newEditCatalog(row)"></mat-row>
+      </mat-table>
+
+
+      <button class="add-button" mat-fab color="primary" aria-label="Nuevo item" (click)="newEditCatalog()" *ngIf="loginService.hasPermission('admin-catalogs-create')">
+        <mat-icon>add</mat-icon>
+      </button>
+
+      
+    </div>
+
+    <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+
+  </div>
+  <!-- Catalog Details -->
+</div>

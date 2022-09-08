@@ -1,0 +1,20 @@
+<div class="toolbar-notifications" (furyClickOutside)="onClickOutside()" fxFlex="grow" fxLayout="row"
+  fxLayoutAlign="start center">
+  <button class="button" type="button" mat-button (click)="toggleDropdown()" [class.open]="isOpen" fxFlex="grow">
+    <img class="flag mr-8" [src]="'assets/icons/flags/'+selectedLanguage.flag+'.png'">
+    <span class="text-uppercase">{{selectedLanguage.id}}</span>
+  </button>
+
+  <div class="dropdown elevation" [class.open]="isOpen">
+    <div class="content">
+      <div class="list">
+        <div class="item" matRipple *ngFor="let lang of languages" (click)="setLanguage(lang)">
+          <span fxLayout="row" fxLayoutAlign="start center">
+            <img [src]="'assets/icons/flags/'+lang.flag+'.png'">
+            <span class="element-text">{{lang.title}}</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

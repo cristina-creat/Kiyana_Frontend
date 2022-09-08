@@ -1,0 +1,24 @@
+:host {
+    display: block;
+    position: relative;
+    height: calc(100%);
+  }
+  .action-button md-icon{
+    cursor: pointer;
+    color: #969696;
+  }
+  .action-button md-icon:hover{
+    color:#363636;
+  }
+  
+  .full-content{
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+  
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  
+    background-color: white;
+  }

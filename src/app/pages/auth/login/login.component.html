@@ -1,0 +1,51 @@
+<div fxFlex fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="start stretch">
+    <div fxFlex.gt-sm="33" class="column-a padding" fxLayout="column" fxLayoutAlign="start center" >
+        <img src="assets/img/main-logo.svg" class="logo">
+        <h3>Ingresa a tu cuenta</h3>
+        <div fxLayout="column" fxLayoutGap="16px" [formGroup]="form" class="form-container">
+            <div fxFlex="auto" fxLayout="column">
+              <mat-form-field fxFlex="grow" appearance="outline">
+                <mat-label>E-Mail</mat-label>
+                <input matInput required formControlName="email" autocomplete="off">
+                <mat-error *ngIf="form.get('email').hasError('required')">Por favor, ingresa tu e-mail</mat-error>
+              </mat-form-field>
+              <mat-form-field fxFlex="grow" appearance="outline">
+                <mat-label>Contraseña</mat-label>
+                <input matInput [type]="inputType" formControlName="password" required autocomplete="off">
+                <button type="button" mat-icon-button matSuffix (click)="toggleVisibility()" matTooltip="Ver/ocultar la contraseña">
+                  <mat-icon *ngIf="visible">visibility</mat-icon>
+                  <mat-icon *ngIf="!visible">visibility_off</mat-icon>
+                </button>
+                <!--<mat-hint>Click para ver la contraseña</mat-hint>-->
+                <mat-error *ngIf="form.get('password').hasError('required')">Tu contraseña es necesaria</mat-error>
+              </mat-form-field>
+            </div>
+      
+            <div fxLayout="row" fxLayoutAlign="end center">
+              <!--<mat-checkbox class="caption">Remember Me</mat-checkbox>-->
+              <a class="caption" [routerLink]="['/forgot-password']">¿Olvidaste tu contraseña?</a>
+            </div>
+            <button type="button" color="primary" mat-raised-button (click)="send()">
+              Iniciar Sesión
+            </button>
+            <!--
+            <p class="secondary-text text-center">
+              Don't have an account?<br/>
+              <a [routerLink]="['/register']">Click here to create one</a>
+            </p>
+            -->
+            <small class="legal text-center">Copyright © 2022 KIYANA / Todos los derechos reservados.</small>
+          </div>
+    </div>
+    <div fxFlex.gt-sm class="column-b">
+        <div class="padding text-right">
+            Para ayuda escríbenos al <button mat-flat-button class="button-rounded whatsapp-button">
+                <img src="assets/img/login/whatsapp.svg" />
+                Whatsapp
+            </button>
+        </div>
+        <div>
+            <img class="main-img" src="assets/img/login/main-img.png" />
+        </div>
+    </div>
+</div>

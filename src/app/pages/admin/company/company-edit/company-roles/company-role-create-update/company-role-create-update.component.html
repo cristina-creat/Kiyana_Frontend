@@ -1,0 +1,19 @@
+<h2 mat-dialog-title>Perfil de usuario</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+
+    <div class="person">
+      <div fxLayout="column" fxLayout="row">
+        <mat-form-field fxFlex>
+          <mat-label>Nombre del perfil</mat-label>
+          <input type="text" formControlName="name" matInput autocomplete="off" required>
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid">Crear Perfil</button>
+    <button *ngIf="isUpdateMode()" mat-button [disabled]="!form.valid">Actualizar Perfil</button>
+  </mat-dialog-actions>
+</form>

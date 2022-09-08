@@ -1,0 +1,115 @@
+:host {
+    .card-list {
+        background: #fff;
+        h3 {
+            font-weight: 500;
+        }
+    }
+    mat-tab-group.full-height {
+        height: calc(100% - 49px) !important;
+    }
+    .actividades-section {
+        .left-side {
+            border-right: solid 1px #dedede;
+            background: #fdfdfd;
+            padding: 20px;
+            overflow-y: auto;
+            box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.12);
+            -webkit-box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.12);
+            -moz-box-shadow: 3px 0px 5px 0px rgba(0,0,0,0.12);
+            .heading {
+                padding: 10px;
+                border-radius: 8px;
+                background: #f0f0f0;
+                .icon-container {
+                    background: #e5e5e5;
+                    width: 35px;
+                    height: 35px;
+                    line-height: 30px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    border-radius: 4px;
+                }
+                .head-title {
+                    h3 {
+                        margin: 0;
+                    }
+                    small {
+                        font-weight: 300;
+                    }
+                }
+            }
+            .avance {
+                font-weight: 300;
+                font-size: .8em;
+            }
+            .procesos-list {
+                background: #f0f0f0;
+                border-radius: 8px;
+                padding: 0 12px;
+                mat-list {
+                    padding-bottom: 12px;
+                    mat-list-item {
+                        border-bottom: solid 1px #dedede;
+                        cursor: pointer;
+                        .agent-number {
+                            flex-grow: 1
+                        }
+                        &:hover, &.selected {
+                            background: #dedede;
+                        }
+                    }
+                }
+            }
+        }
+        .right-side {
+            padding: 20px;
+            overflow-y: auto;
+            .heading {
+                border-bottom: solid 1px #dedede;
+                padding-bottom: 10px;
+                .head-title {
+                    h3 {
+                        margin: 0;
+                    }
+                }
+            }
+            .subheading {
+                padding: 5px 0;
+                .head-title {
+                    small {
+                        font-weight: 300;
+                    }
+                }
+            }
+            .procesos-list {
+                background: #f0f0f0;
+                border-radius: 8px;
+                padding: 0 12px;
+                margin-top: 10px;
+                mat-list {
+                    padding-bottom: 12px;
+                    mat-list-item {
+                        border-bottom: solid 1px #dedede;
+                        
+                        .agent-number {
+                            flex-grow: 1
+                        }
+                        mat-chip {
+                            border-radius: 50%;
+                            width: 34px;
+                            height: 34px;
+                            padding: 0;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                        }
+                    }
+                }
+                
+            }
+        }
+    }
+}

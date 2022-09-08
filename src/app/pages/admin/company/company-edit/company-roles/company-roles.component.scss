@@ -1,0 +1,28 @@
+@import "var";
+:host {
+    display: block;
+    height: calc(100%);
+
+    .side-list {
+        border-right: solid 1px $gray-color2;
+    }
+
+    mat-list-item.active:not(:hover) {
+        background: $theme-color-primary;
+        color: #fff !important;
+    }
+    mat-list-item.active:hover {
+        background: $theme-color-primary !important;
+        color: #fff !important;
+    }
+    mat-nav-list {
+        padding-top: 0;
+        mat-list-item {
+            border-bottom: solid 1px $gray-color2;
+        }
+    }
+
+    .mat-tree {
+        margin-bottom: 60px;
+    }
+}

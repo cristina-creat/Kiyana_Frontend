@@ -1,0 +1,167 @@
+:host {
+    .mat-form-field {
+        min-width: 180px;
+    }
+    canvas {
+        max-width: 100%;
+    }
+}
+.text-center {
+    justify-content: center;
+}
+.counter-card {
+    border-radius: 6px;
+    color: #434343;
+    .left-icon {
+        margin-right: 20px;
+    }
+    .icon-cnt {
+        background: #FFB837;
+        width: 60px;
+        height: 60px;
+        line-height: 75px;
+        text-align: center;
+        color: #fff;
+        border-radius: 50%;
+        mat-icon {
+            font-size: 2em;
+            width: 48px;
+            height: 48px;
+        }
+    }
+    .tit {
+        font-size: 1.5em;
+        font-weight: 400;
+        span {
+            font-size: 1.7em;
+            font-weight: bold;
+        }
+    }
+    .subtit {
+        font-weight: 400;
+    }
+}
+.dd-info {
+    .badge {
+        background: #4293d0;
+        min-width: 40px;
+        text-align: center;
+        margin-right: 10px;
+    }
+    mat-list-item {
+        font-size: 12px;
+    }
+}
+
+.dd-info2 {
+    mat-list-item {
+        font-size: 1.2em;
+        color: #767676;
+        &.total{
+            .legend {
+                margin-right: 10px;
+                color: #333;
+            }
+            .number {
+                color: #4293d0;
+                font-weight: bold;
+            }
+        }
+        .number {
+            font-size: 2.5em;
+        }
+        .numeralia{
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+}
+/*
+$rad: 6px;
+.mat-card-title {
+    font-weight: 500;
+    font-size: 1.1em;
+}
+.dd-stat {
+    padding: 0;
+    border-radius: $rad;
+    .counter-box {
+        border-radius: $rad;
+        background: linear-gradient(0deg, #D1D2D6 0%, #D1D2D6 100%);
+        color: #D1D2D6;
+        &.blue {
+            background: linear-gradient(0deg, #0065C9 0%, #1482EF 100%);
+            color: #1482EF;
+        }
+        &.orange {
+            background: linear-gradient(0deg, #FF6F37 0%, #FF8F63 100%);
+            color: #FF8F63;
+        }
+        &.yellow {
+            background: linear-gradient(0deg, #FFBC31 0%, #FFDD26 100%);
+            color: #FFDD26;
+        }
+        .num {
+            margin: 20px 0;
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            background: white;
+            line-height: 50px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            -webkit-box-shadow: 0px 2px 11px -2px rgba(0,0,0,0.75);
+            -moz-box-shadow: 0px 2px 11px -2px rgba(0,0,0,0.75);
+            box-shadow: 0px 2px 11px -2px rgba(0,0,0,0.75);
+        }
+    }
+    .label {
+        font-size: 1.5em;
+        color: #525252;
+    }
+}
+.users-list {
+    border-radius: $rad;
+    mat-card-content {
+        margin: 0
+    }
+    .amount {
+        color: #0065C9;
+        font-weight: 500;
+    }
+    .list-item {
+        color: #525252;
+        font-weight: 300;
+    }
+    mat-list-item {
+        border-bottom: solid 1px #c3c3c3;
+        font-size: 1em;
+    }
+}
+
+.events-list {
+    border-radius: $rad;
+    mat-card-content {
+        margin: 0
+    }
+    .business {
+        color: black;
+        font-weight: 500;
+    }
+    .amount {
+        color: #0065C9;
+        font-weight: 500;
+        text-align: right
+    }
+    .list-item {
+        color: #525252;
+        font-weight: 300;
+    }
+    mat-list-item {
+        border-bottom: solid 1px #c3c3c3;
+        font-size: 1em;
+    }
+}
+*/

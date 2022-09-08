@@ -1,0 +1,31 @@
+:host {
+    .mat-dialog-actions {
+        justify-content: flex-end;
+    }
+    .outline-element {
+        border: solid 1px #c7c6c6;
+        border-radius: 6px;
+        padding: 10px;
+        margin-bottom: 18px;
+        position: relative;
+        .heading {
+            margin-top: -22px;
+            margin-bottom: 10px;
+            span {
+                background: #fff;
+                background: #fff;
+                padding: 0px 14px;
+            }
+        }
+        .mat-icon-button {
+            position: absolute;
+            top: -20px;
+            right: 0;
+            background: #fff;
+        }
+    }
+    .file-icon {
+        width: 70px;
+        margin-right: 10px;
+    }
+}

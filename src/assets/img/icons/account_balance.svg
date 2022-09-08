@@ -1,0 +1,15 @@
+<svg id="account_balance" xmlns="http://www.w3.org/2000/svg" width="496" height="496" viewBox="0 0 496 496">
+  <g id="Grupo_2" data-name="Grupo 2">
+    <g id="Grupo_1" data-name="Grupo 1">
+      <path id="Trazado_1" data-name="Trazado 1" d="M264,136H248V96h16V43.288L186.072,0H165.928L88,43.288V96h16v40H88v48H264ZM170.072,16h11.856L239.52,48H112.48ZM104,64H248V80H104ZM232,96v40H216V96Zm-32,0v40H184V96Zm-32,0v40H152V96Zm-32,0v40H120V96Zm112,72H104V152H248Z" fill="#fff"/>
+      <path id="Trazado_2" data-name="Trazado 2" d="M336,224h16V64H280V80h56Z" fill="#fff"/>
+      <path id="Trazado_3" data-name="Trazado 3" d="M336,480H80V416H16V80H72V64H0V427.312L68.688,496H352V432H336ZM64,468.688,27.312,432H64Z" fill="#fff"/>
+      <path id="Trazado_4" data-name="Trazado 4" d="M288,224A104,104,0,1,0,392,328,104.12,104.12,0,0,0,288,224Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,288,416Z" fill="#fff"/>
+      <path id="Trazado_5" data-name="Trazado 5" d="M272,288h32a16.021,16.021,0,0,1,16,16h16a32.032,32.032,0,0,0-32-32h-8V256H280v16h-8a32,32,0,0,0,0,64h32a16,16,0,0,1,0,32H272a16.016,16.016,0,0,1-16-16H240a32.032,32.032,0,0,0,32,32h8v16h16V384h8a32,32,0,0,0,0-64H272a16,16,0,0,1,0-32Z" fill="#fff"/>
+      <path id="Trazado_6" data-name="Trazado 6" d="M470.168,264l-17.136,24H400v16h41.6l-8.112,11.352,13.016,9.3L489.824,264,446.5,203.352l-13.016,9.3L441.6,224H368v16h85.032Z" fill="#fff"/>
+      <path id="Trazado_7" data-name="Trazado 7" d="M496,368V352H430.4l8.1-11.352-13.016-9.3L382.168,392l43.32,60.648,13.016-9.3L430.4,432H496V416H418.968l-17.144-24,17.144-24Z" fill="#fff"/>
+      <path id="Trazado_8" data-name="Trazado 8" d="M176,368V352H134.4l8.1-11.352-13.016-9.3L86.168,392l43.32,60.648,13.016-9.3L134.4,432H216V416H122.968l-17.144-24,17.144-24Z" fill="#fff"/>
+      <path id="Trazado_9" data-name="Trazado 9" d="M137.488,315.352l13.016,9.3L193.824,264,150.5,203.352l-13.016,9.3L145.6,224H80v16h77.032l17.136,24-17.136,24H80v16h65.6Z" fill="#fff"/>
+    </g>
+  </g>
+</svg>

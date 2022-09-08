@@ -1,0 +1,178 @@
+<div
+  class="padding pb-0"
+  fxLayout="column"
+  fxLayoutAlign="space-around stretch"
+  style="height: 100%"
+>
+  <fury-breadcrumbs current="Usuarios" [crumbs]="[]"></fury-breadcrumbs>
+
+  <div
+    class="
+      elevation
+      border-radius
+      radius-card
+      overflow-hidden
+      route-animations-elements
+    "
+    fxFlex
+  >
+    <fury-list
+      name="Customers"
+      [columns]="columns"
+      (filterChange)="onFilterChange($event)" 
+    >
+      <div class="actions">
+        <button mat-icon-button (click)="exportUsers()">
+          <mat-icon>cloud_download</mat-icon>
+        </button>
+        <button
+          class="fury-column-filter"
+          type="button"
+          mat-icon-button
+          [matMenuTriggerFor]="moreMenu"
+          *ngIf="
+            loginService.hasPermission(['admin-users-bulk'])
+          "
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+      </div>
+
+      <mat-menu #moreMenu="matMenu" yPosition="below" xPosition="before">
+        <button
+          class="checkbox-item mat-menu-item"
+          *ngIf="loginService.hasPermission('admin-users-bulk')"
+          (click)="importUsersButton.click()"
+        >
+          <mat-icon>cloud_upload</mat-icon>
+          Importar usuarios
+        </button>
+        <div style="display: none">
+          <input
+            type="file"
+            #importUsersButton
+            (change)="importUsers($event)"
+            accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          /> 
+        </div>
+      </mat-menu>
+
+      <div fxFlex style="overflow-y: scroll">
+        <mat-table #table [dataSource]="dataSource" matSort>
+          <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+          <!-- fullName Column -->
+          <ng-container *ngFor="let column of columns">
+            <ng-container
+              *ngIf="column.isModelProperty"
+              [matColumnDef]="column.property"
+            >
+              <mat-header-cell *matHeaderCellDef mat-sort-header>
+                {{ column.name }}</mat-header-cell
+              >
+              <mat-cell *matCellDef="let row">
+                <span class="fury-mobile-label">{{ column.name }}</span>
+                {{ row[column.property] }}
+              </mat-cell>
+            </ng-container>
+          </ng-container>
+
+          <!-- ID Colaborador Column -->
+          <ng-container matColumnDef="id_colaborador">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              ID Colaborador</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">
+              <span class="fury-mobile-label">ID Colaborador</span>
+              {{ row._tenants.id_colaborador }}
+            </mat-cell>
+          </ng-container>
+
+          <!-- Role Column -->
+          <ng-container matColumnDef="role">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Perfil</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">
+              <span class="fury-mobile-label">Perfil</span>
+              {{ row._tenants._role | idToRole: roles }}
+            </mat-cell>
+          </ng-container>
+          
+          <!-- Active Column -->
+          <ng-container matColumnDef="active">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>
+              Activo</mat-header-cell
+            >
+            <mat-cell *matCellDef="let row">
+              <span class="fury-mobile-label">Activo</span>
+              {{ row._tenants.active }}
+            </mat-cell>
+          </ng-container>
+
+          <!-- actions Column -->
+          <ng-container matColumnDef="actions">
+            <mat-header-cell
+              class="actions-cell"
+              *matHeaderCellDef
+              mat-sort-header
+            ></mat-header-cell>
+            <mat-cell class="actions-cell" *matCellDef="let row">
+              <span class="fury-mobile-label"></span>
+              <button
+                type="button"
+                mat-icon-button
+                [matMenuTriggerFor]="actionsMenu"
+                (click)="$event.stopPropagation()"
+                *ngIf="loginService.hasPermission('admin-users-delete')"
+              >
+                <mat-icon>more_horiz</mat-icon>
+              </button>
+
+              <mat-menu
+                #actionsMenu="matMenu"
+                yPosition="below"
+                xPosition="before"
+              >
+              <!--
+                <button
+                  (click)="router.navigate(['/users/edit/' + row._id])"
+                  mat-menu-item
+                >
+                  <span>Editar</span>
+                </button>
+              -->
+                <button (click)="deleteUser(row)" mat-menu-item>
+                  <span>Eliminar</span>
+                </button>
+              </mat-menu>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row
+            *matHeaderRowDef="visibleColumns; sticky: true"
+          ></mat-header-row>
+          <mat-row
+            *matRowDef="let row; columns: visibleColumns"
+            class="clickable route-animations-elements"
+            (click)="router.navigate(['/app/users/edit/' + row._id])"
+          ></mat-row>
+        </mat-table>
+      </div>
+
+      <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+    </fury-list>
+
+    <button
+      class="create fab-bottom"
+      (click)="createUser()"
+      type="button"
+      mat-mini-fab
+      *ngIf="loginService.hasPermission('admin-users-create')"
+      color="accent"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+</div>

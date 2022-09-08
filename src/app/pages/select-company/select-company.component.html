@@ -1,0 +1,21 @@
+<div class="padding bg-tenants">
+  <mat-card>
+    <mat-card-header class="tenant-card-header">
+      <h4>Selecciona una cuenta</h4>
+      <div></div>
+      <mat-icon style="position: absolute; right: 2%; cursor: pointer;" (click)="close()">close</mat-icon>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <div class="list-item" (click)="redirect(tenant)" *ngFor="let tenant of tenants" fxLayout="row" fxLayoutAlign="start center">
+          <div class="tenant-avatar" *ngIf="tenant._tenant.img" [ngStyle]="{'background-image': 'url('+apiUrl + tenant._tenant.img+')' }">
+          </div>
+          <div fxFlex>
+            {{ tenant._tenant.name }}
+          </div>
+          <mat-icon>chevron_right</mat-icon>
+        </div>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>

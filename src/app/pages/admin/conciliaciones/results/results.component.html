@@ -1,0 +1,264 @@
+<div class="padding pb-0" fxLayout="column" fxLayoutAlign="space-around stretch" style="height: 100%">
+  <fury-breadcrumbs current="Detalles" [crumbs]="['Conciliaciones']" back="true"></fury-breadcrumbs>
+
+
+
+
+  <div class="
+      elevation
+      border-radius
+      radius-card
+      overflow-hidden
+      route-animations-elements
+      card-list
+    " fxFlex>
+    <mat-tab-group class="full-height">
+      <mat-tab label="Actividades">
+        <div fxLayout="row" class="full-height actividades-section">
+          <div fxFlex="40" class="left-side" *ngIf="conciliacion">
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px">
+              <div class="heading" fxLyout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                <div class="icon-container">
+                  <mat-icon>article</mat-icon>
+                </div>
+                <div fxFlex class="head-title">
+                  <h3>{{ conciliacion.type }} - {{ getMonth(conciliacion.month) }} {{ conciliacion.year }}</h3>
+                  <small>{{ conciliacion.created_at | date : 'medium' }}</small>
+                </div>
+                <div>
+                  <mat-chip *ngIf="conciliacion.status == 'pending'">Procesando</mat-chip>
+                  <mat-chip color="success" selected *ngIf="conciliacion.status == 'proccessed'">Completada</mat-chip>
+                  <mat-chip color="warn" selected *ngIf="conciliacion.status == 'failed'">Error</mat-chip>
+                </div>
+                <button mat-icon-button [matMenuTriggerFor]="menuOptions" matTooltip="Opciones"><mat-icon>more_vert</mat-icon></button>
+                <mat-menu #menuOptions="matMenu">
+                  <button mat-menu-item (click)="reloadConciliacion()" *ngIf="proccessedQueue == queue.length && queue.length > 0"><mat-icon>sync</mat-icon><span>Volver a conciliar</span></button>
+                  <button mat-menu-item (click)="removeConciliacion()" *ngIf="loginService.hasPermission(['admin-conciliaciones-delete'])"><mat-icon>delete</mat-icon><span>Eliminar solicitud</span></button>
+                </mat-menu>
+              </div>
+              <div class="avance" fxLayout="column" fxLayoutGap="8px">
+                <div fxLayout="row" fxLayoutAlign="space-between center">
+                  <span>Completado {{ proccessedQueue }}/{{ queue.length }}</span>
+                  <span>{{ percentQueue }}%</span>
+                </div>
+                <div>
+                  <mat-progress-bar
+                      class="big-progress"
+                      color="primary"
+                      mode="determinate"
+                      [value]="percentQueue">
+                  </mat-progress-bar>
+                </div>
+              </div>
+              <div class="procesos-list">
+                <h3>Listado de procesos</h3>
+                <mat-list>
+                  <mat-list-item *ngFor="let it of queue" [ngClass]="{'selected': (currentQueue && currentQueue._id == it._id)}" (click)="currentQueue = it">
+                    <div class="agent-number">
+                      Agente {{ it.identifier }}
+                    </div>  
+                    <mat-chip *ngIf="it.status == 'pending'">Procesando</mat-chip>
+                    <mat-chip color="success" selected *ngIf="it.status == 'completed'">Completada</mat-chip>
+                    <mat-chip color="warn" selected *ngIf="it.status == 'failed'">Fallida</mat-chip>
+                    <mat-icon>chevron_right</mat-icon>
+                  </mat-list-item>
+                </mat-list>
+              </div>
+            </div>
+          </div>
+          <div fxFlex class="right-side">
+            <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="25px" *ngIf="currentQueue">
+              <div>
+                <div class="heading" fxLyout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                  <div fxFlex class="head-title">
+                    <h3>Proceso del agente {{ currentQueue.identifier }}</h3>
+                  </div>
+                  <div>
+                    <mat-chip *ngIf="currentQueue.status == 'pending'">Procesando</mat-chip>
+                    <mat-chip color="success" selected *ngIf="currentQueue.status == 'completed'">Completada</mat-chip>
+                    <mat-chip color="warn" selected *ngIf="currentQueue.status == 'failed'">Fallida</mat-chip>
+                  </div>
+                </div>
+                <div class="subheading" fxLyout="row" fxLayoutAlign="start center" fxLayoutGap="15px">
+                  <div class="head-title">
+                    <small *ngIf="currentQueue.status == 'pending'">Solicitado: {{ currentQueue.created_at | date : 'medium' }}</small>
+                    <small *ngIf="currentQueue.status != 'pending'">Iniciado: {{ currentQueue.started_at | date : 'medium' }}</small>
+                  </div>
+                  <button mat-flat-button color="primary" *ngIf="currentQueue.status != 'pending'" (click)="reloadQueue( currentQueue )">
+                    <mat-icon>sync</mat-icon>
+                    Volver a procesar
+                  </button>
+                  <span fxFlex></span>
+                </div>
+                <div class="procesos-list" *ngIf="currentQueue.activities && currentQueue.activities.length">
+                  <mat-list>
+                    <mat-list-item *ngFor="let item of currentQueue.activities">
+                      <div class="agent-number">
+                        {{ item.act }}
+                      </div>  
+                      <mat-chip color="success" selected  *ngIf="item.status"><mat-icon>check</mat-icon></mat-chip>
+                      <mat-chip color="warn" selected  *ngIf="!item.status"><mat-icon>priority_high</mat-icon></mat-chip>
+                    </mat-list-item>
+                  </mat-list>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Resultados">
+        <fury-list [columns]="columns" (filterChange)="onFilterChange($event)">
+          <div class="actions">
+
+            <button mat-icon-button *ngIf="conciliacionResult" (click)="exportData()">
+              <mat-icon>cloud_download</mat-icon>
+            </button>
+            <!--
+            <button mat-icon-button *ngIf="conciliacionResult" (click)="exportData()">
+              <mat-icon>folder_zip</mat-icon>
+            </button>
+            -->
+            <!--
+        <button
+          class="fury-column-filter"
+          type="button"
+          mat-icon-button
+          [matMenuTriggerFor]="moreMenu"
+          *ngIf="
+            loginService.hasPermission(['admin-roles-read', 'admin-users-bulk'])
+          "
+        >
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        -->
+          </div>
+          <!--
+      <mat-menu #moreMenu="matMenu" yPosition="below" xPosition="before">
+        <button
+          class="checkbox-item mat-menu-item"
+          routerLink="roles"
+          *ngIf="loginService.hasPermission('admin-roles-read')"
+        >
+          <mat-icon>group</mat-icon>
+          Perfiles
+        </button>
+        
+        <div style="display: none">
+          <input
+            type="file"
+            #importUsersButton
+            (change)="importUsers($event)"
+            accept=".csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+          /> 
+        </div>
+    </mat-menu>
+    -->
+
+          <div fxFlex style="overflow-y: auto">
+
+            <mat-table #table [dataSource]="dataSource" matSort>
+
+              <ng-container *ngFor="let column of columns">
+                <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{ column.name }}</mat-header-cell>
+                  <mat-cell *matCellDef="let row">{{ row[column.property] }}</mat-cell>
+                </ng-container>
+              </ng-container>
+
+              <ng-container matColumnDef="agente_importe">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Agente Importe</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span *ngIf="row.agente_importe != 'N/A'">{{ row.agente_importe | currency }}</span>
+                  <span *ngIf="row.agente_importe == 'N/A'">N/A</span>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="agente_comisiones">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  Agente Comisiones</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span *ngIf="row.agente_comisiones != 'N/A'">{{ row.agente_comisiones | currency }}</span>
+                  <span *ngIf="row.agente_comisiones == 'N/A'">N/A</span>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="ins_importe">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  INS Importe</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span *ngIf="row.ins_importe != 'N/A'">{{ row.ins_importe | currency }}</span>
+                  <span *ngIf="row.ins_importe == 'N/A'">N/A</span>
+                </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="ins_comisiones">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                  INS Comisiones</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <span *ngIf="row.ins_comisiones != 'N/A'">{{ row.ins_comisiones | currency }}</span>
+                  <span *ngIf="row.ins_comisiones == 'N/A'">N/A</span>
+                </mat-cell>
+              </ng-container>
+
+
+
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                  <div [ngSwitch]="row.status">
+                    <span *ngSwitchCase="'Encontrado'">
+                      <mat-icon matTooltip="Satisfactorio" color="accent">verified</mat-icon> Encontrado
+                    </span>
+                    <span *ngSwitchCase="'Diferente importe'">
+                      <mat-icon matTooltip="Las comisiones no coinciden" color="warn">money_off</mat-icon> Diferente
+                      importe
+                    </span>
+                    <span *ngSwitchCase="'Diferente endoso'">
+                      <mat-icon matTooltip="El número de endoso es diferente" color="warn">assignment_late</mat-icon>
+                      Diferente endoso
+                    </span>
+                    <span *ngSwitchCase="'Sin registro agente'">
+                      <mat-icon matTooltip="El registro no se encontró en SICA" color="danger">error</mat-icon> Sin
+                      registro agente
+                    </span>
+                    <span *ngSwitchCase="'Sin registro aseguradora'">
+                      <mat-icon matTooltip="El registro no se encontró en la aseguradora" color="danger">error
+                      </mat-icon> Sin registro aseguradora
+                    </span>
+                    <span *ngSwitchDefault>{{row.status}}</span>
+                  </div>
+                </mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <mat-header-cell class="actions-cell" *matHeaderCellDef mat-sort-header></mat-header-cell>
+                <mat-cell class="actions-cell" *matCellDef="let row">
+                  <span class="fury-mobile-label"></span>
+                  <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu"
+                    (click)="$event.stopPropagation()">
+                    <mat-icon>more_horiz</mat-icon>
+                  </button>
+
+                  <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                    <button (click)="router.navigate(['/users/edit/' + row._id])" mat-menu-item>
+                      <span>Editar</span>
+                    </button>
+                    <button (click)="deleteUser(row)" mat-menu-item>
+                      <span>Eliminar</span>
+                    </button>
+                  </mat-menu>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="visibleColumns; sticky: true"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: visibleColumns" class="route-animations-elements"></mat-row>
+            </mat-table>
+
+          </div>
+
+          <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+        </fury-list>
+      </mat-tab>
+    </mat-tab-group>
+
+  </div>
+</div>

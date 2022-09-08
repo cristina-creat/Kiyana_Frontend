@@ -1,0 +1,58 @@
+@import "var";
+:host {
+  mat-card {
+    padding: 0;
+    border-radius: 12px;
+    width: 640px;
+    max-width: 80%;
+    max-height: 90%;
+    overflow: auto;
+    mat-list {
+      padding: 0;
+      .list-item {
+        padding: 10px;
+        border-bottom: solid 1px #f3f3f3;
+        cursor: pointer;
+        transition: background-color .3s ease-in-out;
+        &:hover {
+          background-color: #f3f3f3;
+        }
+        .tenant-avatar {
+          margin-right: 20px; 
+          width: 60px; 
+          height: 60px; 
+          display: flex;       
+          justify-content: center;
+          align-items: center;
+          background-size: 100% auto;
+          background-position: center center;
+          background-repeat: no-repeat;
+        }
+      }
+    }
+  }
+  /*
+  * PAGE TENANTS
+  */
+
+  .bg-tenants{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent linear-gradient(180deg, #FFFFFF 0%, #E2E2E2 100%) 0% 0% no-repeat padding-box;
+  }
+
+  .tenant-card-header{
+    background: $theme-color-primary;
+    color: $theme-color-primary-contrast;
+    border-start-start-radius: 12px;
+    border-start-end-radius: 12px;
+    padding: 10px;
+    align-items: center;
+    position: relative;
+  }
+
+
+
+}
